@@ -46,3 +46,25 @@
 	 (loop for i from (* boxx xblocks) below (* (+ boxx 1) xblocks)
 	       when (not (empty board j i)) 
 	       collect (aref board j i)))))
+
+;; Determines the number of naive options available to a space
+(defun cell-options (board x y)
+  (set-difference 
+   values 
+   (union 
+    (union
+     (row-contents board y)
+     (col-contents board x) )
+    (box-contents board (floor (/ x XBLOCKS)) (floor (/ y YBLOCKS))) )))
+
+;; Set all fully-constrained cells to their contrained values (non-destructive)
+(defun fill-board (board)
+  (let (new-board (copy-array board))
+    (loop for j from 0 to (- MAXY 1) do
+	  (loop for i from 0 to (- MAXX 1) 
+		when (and (empty new-board j i)
+			  (equal (length (cell-options new-board i j)) 1))
+		do (setf (aref new-board j i) 
+			 (car (cell-options new-board i j)) )
+		(setq i 0) (setq j 0) ))))
+			  
