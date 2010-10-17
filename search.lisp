@@ -59,12 +59,13 @@
 
 ;; Set all fully-constrained cells to their contrained values (non-destructive)
 (defun fill-board (board)
-  (let (new-board (copy-array board))
+  (let ((new-board (copy-array board)))
     (loop for j from 0 to (- MAXY 1) do
 	  (loop for i from 0 to (- MAXX 1) 
 		when (and (empty new-board j i)
 			  (equal (length (cell-options new-board i j)) 1))
 		do (setf (aref new-board j i) 
 			 (car (cell-options new-board i j)) )
-		(setq i 0) (setq j 0) ))))
+		(setq i 0) (setq j 0) ))
+    new-board ))
 			  
