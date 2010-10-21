@@ -146,13 +146,29 @@
                      (list MAXX MAXY)
                      :initial-element '-
                      ))
-   (parent :accessor parent
+   (parent :accessor game-parent
 	   :initarg parent
 	   :initform nil)
    (fofx :accessor fofx
 	 :initarg fofx
 	 :initform 0)
+   ;; lists of lists of lists, marking the values still needed in
+   ;; each row/col/box.
+   (row-req :accessor game-row-req
+	    :initform (loop for i from 1 to MAXY collect values))
+   (col-req :accessor game-col-req
+	    :initform (loop for i from 1 to MAXX collect values))
+   (box-req :accessor game-box-req
+	    :initform (loop for i from 1 to YBLOCKS
+			    (loop for j from 1 to XBLOCKS
+				  collect values)))
    ))
+
+;; Method to enforce consistency of slots
+(defmethod initialize-instance :after ((newgame game) &key)
+  (let ((board (game-board newgame)))
+    ;; TODO: Eliminate requirements based on board
+    ))
 
 ;;==============================================================
 ;; USEFUL UTILITY FUNCTIONS
