@@ -21,7 +21,7 @@
 		when (empty board x y) do
 		(setq xf x) (setq yf y) (setq x MAXX) (setq y MAXY)))
     ;;Try to find solutions for each option for that element
-    (setq options (cell-options board xf yf))
+    (setq options (cell-options board yf xf))
     (loop for op in options do
 	  (setq new-board (copy-array board))
 	  (setf (aref new-board xf yf) op)
