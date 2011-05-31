@@ -101,11 +101,11 @@
 ;; How many blocks along the x and y axes?  default is 2x2 -> 4x4 board
 (defvar XBLOCKS 0
   "Number of large blocks along the x-axis")
-(setf XBLOCKS 2)
+(setf XBLOCKS 3)
 
 (defvar YBLOCKS 0
   "Number of large blocks along the y-axis")
-(setf YBLOCKS 2)
+(setf YBLOCKS 3)
 
 (defvar MAXX 0
   "Maximum X dimension [1-based] of the current XBLOCKS*YBLOCKS game")
@@ -159,7 +159,7 @@
    (col-req :accessor game-col-req
 	    :initform (loop for i from 1 to MAXX collect values))
    (box-req :accessor game-box-req
-	    :initform (loop for i from 1 to YBLOCKS
+	    :initform (loop for i from 1 to YBLOCKS do
 			    (loop for j from 1 to XBLOCKS
 				  collect values)))
    ))
